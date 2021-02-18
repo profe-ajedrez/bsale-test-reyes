@@ -1,21 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link type="style" href="css/css.css" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+      integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/css.css" />
+    <script
+      src="https://kit.fontawesome.com/cd7b45bb8f.js"
+      crossorigin="anonymous"
+    ></script>
 
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <h1>header</h1>
+      <nav class="shadow-sm">
+        <ul class="menu">
+          <li class="logo"><a href="#">Bsale Test</a></li>
+          <li class="item">
+            <label for="categories_sel">Categorias: </label>
+            <select id='categories_sel' class='select-dropdown'>
+              <option value="ALL">Todas</option>
+              <option value="1">cat 1</option>
+              <option value="2">cat 2</option>
+            </select>
+          </li>
+          <li class="item">
+            <div>
+              <form id='querier'>
+                <input type="text" name="q" id="q" class="input-search">
+                <button id="q-button" class="search-q btn btn-sm btn-ghost-blue"><i class="fas fa-search"></i></button>
+              </form>
+            </div>
+          </li>
+
+          <li class="item">
+            <button 
+              type='button' 
+              id='reset-filter' 
+              class="btn btn-square btn-sm btn-ghost-blue reset-filter"><i class="fa fa-refresh reset-filter" aria-hidden="true"></i> Quitar filtros</button>
+          </li>
+          
+          <li class="toggle">
+            <a href="#"><i class="fas fa-bars"></i></a>
+          </li>
+        </ul>
+      </nav>
     </header>
 
-    <div class="container">
-        <h1>content</h1>
+
+
+    <div class="main">
+
+      <div id='loader' class="loader"></div>
+
+      <div id = "grid-container" class="container">
+       
+      </div>
     </div>
 
-    <footer><h1>footer</h1></footer>
-</body>
+
+
+    <footer class='footer shadow-sm'>
+      <div class="social-footer">
+        <ul class="ft-social-list">          
+          <li>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="fab fa-github"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </li>
+        </ul>
+      </div>
+      <div class="disclaimer-footer">
+        <ul class="ft-legal-list">
+          <li><a href="#">Terms &amp; Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li>&copy; 2021 Copyright Undercoder</li>
+        </ul>
+      </div>
+    </footer>
+
+    <script src="js/helpers.js"></script>
+    <script src="js/fetchers.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/suscribers.js"></script>
+    <script src="js/controller.js"></script>
+  </body>
 </html>

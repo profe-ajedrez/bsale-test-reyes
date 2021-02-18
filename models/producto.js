@@ -4,7 +4,7 @@
 'use strict';
 
 const config = require('../config/config');
-const {query} = require('./db');
+const {query, autoclosedQuery} = require('./db');
 
 const baseQuery = 'SELECT p.id,p.`name`,p.url_image,p.price,p.discount,p.category as category_id, c.name AS category FROM product p';
 const baseJoin = 'LEFT JOIN category c ON p.category=c.id'
@@ -32,31 +32,50 @@ const filterBy = (toFilter) => {
     return '';
   }
 
-  return 'WHERE LOWER(p.`name`) LIKE ? OR LOWER(c.name) LIKE ?'
+  return 'WHERE (LOWER(p.`name`) LIKE ? OR LOWER(c.name) LIKE ?)'
+};
+
+const categorizedBy = (category, prevCondition) => {
+  if (!!prevCondition) {
+    return `${prevCondition} AND p.category = ?`;
+  }
+  return 'WHERE p.category = ?';
 };
 
 
-
 module.exports.getAll = (conn, sorteredColumn) => {    
-  return query(conn, `${baseQuery} ${baseJoin} ${sortBy(sorteredColumn)}`);    
+  return autoclosedQuery(conn, `${baseQuery} ${baseJoin} ${sortBy(sorteredColumn)}`);    
 };
 
 
 module.exports.getPaginated = (conn, limit, offset, sorteredColumn) => {
   const paginationQuery = getPaginationQuery(limit, offset);
   const sql =  `${baseQuery} ${baseJoin} ${sortBy(sorteredColumn)} ${paginationQuery}`;
-  return query(conn, sql);
+  return autoclosedQuery(conn, sql);
 };
 
 
 module.exports.getFiltered = (conn, filter, sorteredColumn) => {
   const sql = `${baseQuery} ${baseJoin} ${filterBy(filter)} ${sortBy(sorteredColumn)}`;
-  return query(conn, sql, [`%${filter}%`, `%${filter}%`]);
+  return autoclosedQuery(conn, sql, [`%${filter}%`, `%${filter}%`]);
 };
+
+module.exports.getByCategory = (conn, category, sorteredColumn) => {
+
+  const sql = `${baseQuery} ${baseJoin} ${categorizedBy(category)} ${sortBy(sorteredColumn)}`;
+  return autoclosedQuery(conn, sql, [category]);
+};
+
 
 
 module.exports.getFilteredPaginated = (conn, filter, limit, offset, sorteredColumn) => {
   const paginationQuery = getPaginationQuery(limit, offset);
   const sql = `${baseQuery} ${baseJoin} ${filterBy(filter)} ${sortBy(sorteredColumn)} ${paginationQuery}`;
-  return query(conn, sql, [`%${filter}%`, `%${filter}%`]);
+  return autoclosedQuery(conn, sql, [`%${filter}%`, `%${filter}%`]);
+};
+
+
+module.exports.getByCategoryFiltered = (conn, category, filter, sorteredColumn) => {
+  const sql = `${baseQuery} ${baseJoin}  ${categorizedBy(category, filterBy(filter))} ${sortBy(sorteredColumn)}`;
+  return autoclosedQuery(conn, sql, [`%${filter}%`, `%${filter}%`, category]);
 };

@@ -3,8 +3,9 @@
  */
 'use strict';
 
+const config = require('../config/config');
 const producto = require('../models/producto');
-
+const { getConnection } = require('../models/db');
 
 /**
  * getLimitOffset
@@ -27,11 +28,30 @@ const getLimitOffset = (req) => {
 
 
 
-exports.getAllProducts = (req, res) => {
+const checkCategory = (category, req, res) => {
+  /* Solo aceptamos categorías numericas, en caso contrario respondemos con 
+     status código 400, mal request, porque preferimos asumir una intervención del request, por seguridad
+  */
+  if (isNaN(category)) {
+
+    return res.status(400).json({
+      status: 'failed',
+      code: 400,
+      data: {
+        productos: [],
+        category: req.params.category,
+      }
+    });
+  }
+};
+
+
+
+exports.getAllProducts = async (req, res) => {
+  const conn = await getConnection(config);
     
-  producto.getAll(req.conn)
+  producto.getAll(conn)
   .then((productos) => {
-    req.conn.end();
     res.status(200).json({
       status: 'success',
       data: {
@@ -47,12 +67,13 @@ exports.getAllProducts = (req, res) => {
 };
 
 
-exports.getPaginatedProducts = (req, res) => {
+exports.getPaginatedProducts = async (req, res) => {
+  const conn = await getConnection(config);
   const { limit, offset } = getLimitOffset(req);  
 
-  producto.getPaginated(req.conn, limit, offset)
+  producto.getPaginated(conn, limit, offset)
   .then((productos) => {
-    req.conn.end();
+    
     res.status(200).json({
       status: 'success',
       data: {
@@ -70,12 +91,13 @@ exports.getPaginatedProducts = (req, res) => {
 };
 
 
-exports.getFilteredProducts = (req, res) => {
+exports.getFilteredProducts = async (req, res) => {
+  const conn = await getConnection(config);
   const filter = req.params.filter.toLowerCase();
 
-  producto.getFiltered(req.conn, filter)
+  producto.getFiltered(conn, filter)
   .then((productos) => {
-    req.conn.end();    
+        
     res.status(200).json({
       status: 'success',
       data: {
@@ -92,13 +114,14 @@ exports.getFilteredProducts = (req, res) => {
 };
 
 
-exports.getFilteredProductsPaginated = (req, res) => {
+exports.getFilteredProductsPaginated = async (req, res) => {
+  const conn = await getConnection(config);
   const filter = req.params.filter.toLowerCase();
   const { limit, offset } = getLimitOffset(req);
 
-  producto.getFilteredPaginated(req.conn, filter, limit, offset)
+  producto.getFilteredPaginated(conn, filter, limit, offset)
   .then((productos) => {
-    req.conn.end();    
+        
     res.status(200).json({
       status: 'success',
       data: {
@@ -109,9 +132,100 @@ exports.getFilteredProductsPaginated = (req, res) => {
       }
     });
   }).catch((err) => {
+       
     res.status(500).json({
       status: 'failed',
       message: err
     });
   });
+   
+};
+
+
+exports.getCategorizedProducts = async (req, res) => {
+  const category = parseInt(req.params.category);
+
+  checkCategory(category, req, res);
+
+  const conn = await getConnection(config);
+
+  producto.getByCategory(conn, category)
+  .then((productos) => {
+    
+    if (productos.length === 0) {
+      return res.status(404).json({
+        status: 'failed',
+        code: 404,
+        data: {
+          productos: [],
+          category: req.params.category
+        }
+      });
+    }
+
+
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        productos: productos,
+        category: req.params.category
+      }
+    });
+  }).catch((err) => {
+    
+    return res.status(500).json({
+      status: 'failed',
+      message: err,
+      data: {
+        productos: []
+      }
+    });
+  });
+    
+};
+
+
+
+exports.getCategorizedFilteredProducts = async (req, res) => {
+  const category = parseInt(req.params.category);
+  const filterBy = req.params.filter;
+
+  checkCategory(category, req, res);
+
+  const conn = await getConnection(config);
+  
+  producto.getByCategoryFiltered(conn, category, filterBy)
+  .then((productos) => {
+    
+    if (productos.length === 0) {
+      return res.status(404).json({
+        status: 'failed',
+        code: 404,
+        data: {
+          productos: [],
+          category: req.params.category
+        }
+      });
+    }
+
+
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        productos: productos,
+        category: req.params.category,
+        filter: filterBy
+      }
+    });
+  }).catch((err) => {
+    
+    return res.status(500).json({
+      status: 'failed',
+      message: err,
+      data: {
+        productos: []
+      }
+    });
+  });
+
 };

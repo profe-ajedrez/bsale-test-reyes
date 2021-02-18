@@ -22,7 +22,7 @@ app.use(express.static(`${__dirname}/public`));
 
 app.use( async (req, res, next) => {
   req.requestTime = new Date().toISOString();
-  req.conn = await getConnection(config);
+  
   next();
 });
 
@@ -36,4 +36,6 @@ app.use('/api/v1/categories', categoryRouter);
 
 app.listen(app.config.port, () => {
   app.emit('serverRunning');
+}).on('error', (err) => {
+  console.log(err);
 });
