@@ -3,7 +3,7 @@
 
 const __fetchers = (function(w, d) {
   const api = '/api/v1';
-  const defaultImgUrl = api + '/img/no-available.png';
+  const defaultImgUrl = '/img/no-available.png';
   
   async function fetchCategories() {
     try {
