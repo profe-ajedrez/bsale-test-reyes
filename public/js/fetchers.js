@@ -2,10 +2,7 @@
 
 
 const __fetchers = (function(w, d) {
-  
-  const devEntryPoint  = "http://localhost:5000";
-  const prodEntryPoint = "https://bsale-test-andres-reyes.herokuapp.com";
-  const api = devEntryPoint + '/api/v1';
+  const api = '/api/v1';
   const defaultImgUrl = devEntryPoint + '/img/no-available.png';
   
   async function fetchCategories() {
