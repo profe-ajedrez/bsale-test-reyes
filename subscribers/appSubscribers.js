@@ -17,4 +17,8 @@ module.exports.registerSubscribers = (app) => {
   app.on('serverRunning', (event) => {
     console.log('Running...');
   });
+
+  app.on('dbConnected', (event) => {
+    console.log('connected to DB...');
+  });
 };
