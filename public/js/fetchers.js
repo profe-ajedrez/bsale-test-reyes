@@ -4,9 +4,9 @@
 const __fetchers = (function(w, d) {
   
   const devEntryPoint  = "http://localhost:5000";
-  const prodEntryPoint = "";
-  const api = devEntryPoint + '/api/v1';
-  const defaultImgUrl = devEntryPoint + '/img/no-available.png';
+  const prodEntryPoint = "https://bsale-test-andres-reyes.herokuapp.com";
+  const api = prodEntryPoint + '/api/v1';
+  const defaultImgUrl = prodEntryPoint + '/img/no-available.png';
   
   async function fetchCategories() {
     try {
