@@ -1,0 +1,46 @@
+.container {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	max-width: 960px;
+}
+
+.column {
+	--columns: 12; /* Number of columns in the grid system */
+	--width: 0; /* Default width of the element */
+
+	flex-basis: calc(var(--width) / var(--columns) * 100%);
+}
+
+.header {
+	--width: 12;
+}
+
+.content {
+	--width: 12;
+}
+
+.sidebar {
+	--width: 12;
+}
+
+@media (min-width: 576px) {
+	.content {
+		--width: 6;
+	}
+	
+	.sidebar {
+		--width: 6;
+	}
+}
+
+@media (min-width: 768px) {
+	.content {
+		--width: 8;
+	}
+	
+	.sidebar {
+		--width: 4;
+	}
+}
+
