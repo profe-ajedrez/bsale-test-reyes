@@ -19,6 +19,26 @@ const clientSuscribers = (function(w,d,) {
         __app.loadProducts(ui);
       });
     });
+
+    ui.closeLightbox.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      ui.lightbox.style.display = 'none';
+      ui.lightboxImg.src = '#';
+    });
+
+    d.addEventListener('click', function(e) {
+      if (e.target.className.indexOf('card-link') > -1) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+
+        const src = e.target.dataset.src;
+        if (!!src)  {
+          ui.lightbox.style.display = 'block';
+          ui.lightboxImg.src = src;
+        }
+      }
+    });
   }
 
 

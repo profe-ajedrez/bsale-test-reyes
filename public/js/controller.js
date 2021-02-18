@@ -44,6 +44,9 @@ const __app = (function(w, d) {
       querier: d.getElementById('querier'),
       reseter: d.querySelectorAll('.reset-filter'),
       loader: d.getElementById('loader'),
+      lightbox: d.getElementById('myModal'),
+      lightboxImg: d.getElementById('lightboxImg'),
+      closeLightbox: d.getElementById('closeLightbox'),
     };
 
 

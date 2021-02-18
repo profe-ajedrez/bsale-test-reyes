@@ -28,24 +28,26 @@ const __components = (function(w, d) {
         $ ${current.discount}  <span class="card-text-oferta">Desc.!</span>     
       </div>` : '');
 
+      
       return `${prev} ${closeRow} 
-      <div class="column _25">
-        <div class="card">
-          <div class="img-card-container" style='background: url(${imgUrl});background-repeat: no-repeat;
-          background-size: cover;'>
-            <div class='product-data'>${discount}</div>
-          </div>
-          <div class='product-name'>${current.name}</div>
-          <div class="card-data">
-            
-            <div class='product-price'>
-              <i class="fa fa-tag fa-lg"></i> Precio unitario: $ ${current.price}               
+      <div class="column _25">        
+          <div class="card">
+            <div class="img-card-container" style='background: url(${imgUrl});background-repeat: no-repeat;
+            background-size: cover;'>
+              <div class='product-data'>${discount}</div>
             </div>
-            <div class='card-controls'>
-              <button data-product='${current.id}' class='w100 btn btn-round btn-lg btn-filled-orange' title="Agregar al carro"><i class="fas fa-shopping-cart"></i></button>
+            <div class='product-name'>${current.name}</div>
+            <div class="card-data">
+              
+              <div class='product-price'>
+                <i class="fa fa-tag fa-lg"></i> Precio unitario: $ ${current.price}   
+                <a class='card-link' href='#' data-src='${imgUrl}'><i data-src='${imgUrl}' class="fas fa-eye card-link"></i></a>           
+              </div>
+              <div class='card-controls'>
+                <button data-product='${current.id}' class='w100 btn btn-round btn-lg btn-filled-orange' title="Agregar al carro"><i class="fas fa-shopping-cart"></i></button>
+              </div>
             </div>
           </div>
-        </div>
       </div>  
       `;
     }, '') + '</div>';
