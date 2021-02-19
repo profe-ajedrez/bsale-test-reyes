@@ -22,6 +22,16 @@
       <nav class="shadow-sm">
         <ul class="menu">
           <li class="logo"><a href="#">Bsale Test</a></li>
+
+          <li >
+            <a href="#" 
+              title="Ver Carro"
+              id="verCarro" 
+              class="notification">
+              <span><i class="add fas fa-shopping-cart"></i></span>
+              <span id="contadorProd" class="badge">0</span>
+            </a>
+          </li>  
           <li class="item">
             <label for="categories_sel">Categorias: </label>
             <select id='categories_sel' class='select-dropdown'>
@@ -47,9 +57,16 @@
           </li>
           
           <li class="toggle">
-            <a href="#"><i class="fas fa-bars"></i></a>
+            <a href="#" class="toggle"><i class="fas fa-bars toggle"></i></a>
           </li>
         </ul>
+
+        <div id="resumen" class="ww-100 hidden">
+          <div id='cart-container'>
+            
+          </div>
+          <div id="cart-controles"></div>
+        </div>
       </nav>
     </header>
 
@@ -73,7 +90,7 @@
 
     <footer class='footer shadow-sm'>
       <div class="social-footer">
-        <ul class="ft-social-list">                    
+        <ul class="ft-social-list">
           <li>
             <a href="https://github.com/profe-ajedrez/bsale-test-reyes"><i class="fab fa-github"></i></a>
           </li>
@@ -83,13 +100,12 @@
         </ul>
       </div>
       <div class="disclaimer-footer">
-        <ul class="ft-legal-list">
-          <li><a href="#">Terms &amp; Conditions</a></li>
-          <li><a href="#">Privacy Policy</a></li>
-          <li>&copy; 2021 Copyright Undercoder</li>
+        <ul class="ft-legal-list">          
+          <li>&copy; 2021 Copyright <a href="http://jacobopus.github.io/">Undercoder</a></li>
         </ul>
       </div>
     </footer>
+
 
     <script src="js/helpers.js"></script>
     <script src="js/fetchers.js"></script>

@@ -12,11 +12,28 @@ const __components = (function(w, d) {
   }
 
 
+  function getPaginator(count, limit, offset) {
+    const pages = Math.round(count / limit);    
+    let offsetCount = 0;
+    let template = '<a href="#">&laquo;</a>';
+
+    for (let i = 1; i <= pages; i++) {
+      const active = (offsetCount === offset ? `class="active"` : '');
+      template = `${template} 
+      <a href="#" ${active} data-offset="${offsetCount}" data-page="${i}"></a> 
+      `;
+      offsetCount += limit;
+    }
+
+    template = `<div class="center"><div class="pagination">${template}<a href="#">&raquo;</a></div></div>`;
+    return template;
+  }
+
+
   function getGridProducts(dataProducts, defaultImgUrl) {
     if (dataProducts.length === 0) {
       return '<div class="alert">No se encontraron productos</div>';
-    }
-
+    }    
 
     const grid = '<div class="row">' +
     dataProducts.data.productos.reduce((prev, current, idx) => {
@@ -30,21 +47,21 @@ const __components = (function(w, d) {
 
       
       return `${prev} ${closeRow} 
-      <div class="column _25">        
+      <div class="column ">        
           <div class="card">
             <div class="img-card-container" style='background: url(${imgUrl});background-repeat: no-repeat;
             background-size: cover;'>
               <div class='product-data'>${discount}</div>
             </div>
-            <div class='product-name'>${current.name}</div>
+            <div class='product-name'>${current.name.toUpperCase()}</div>
             <div class="card-data">
               
               <div class='product-price'>
                 <i class="fa fa-tag fa-lg"></i> Precio unitario: $ ${current.price}   
-                <a class='card-link' href='#' data-src='${imgUrl}'><i data-src='${imgUrl}' class="fas fa-eye card-link"></i></a>           
+                <a class='card-link' title="Ver producto" href='#' data-src='${imgUrl}'><i data-src='${imgUrl}' class="fas fa-eye card-link"></i></a>           
               </div>
               <div class='card-controls'>
-                <button data-product='${current.id}' class='w100 btn btn-round btn-lg btn-filled-orange' title="Agregar al carro"><i class="fas fa-shopping-cart"></i></button>
+                <button data-productid='${current.id}' data-product='${JSON.stringify(current)}' class='add w100 btn btn-round btn-lg btn-filled-orange' title="Agregar al carro"><i data-product='${JSON.stringify(current)}' class="add fas fa-shopping-cart"></i></button>
               </div>
             </div>
           </div>

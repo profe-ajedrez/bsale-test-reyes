@@ -4,6 +4,7 @@
   --accent-color: #2980b9;
   --body-color: #3498db;
   --loader-color: #ffffff;
+  --callacction-color: #d35400;
 }
 
 html, body {
@@ -22,6 +23,7 @@ html, body {
   flex-direction: row;
   flex-wrap: wrap;
   margin-bottom: 2rem;
+  
 }
 
 .column {
@@ -504,7 +506,25 @@ a:hover {
 }
 
 
+.hidden {
+  display:none;
+}
 
+#resumen {
+  
+  padding: 1rem;
+  z-index:999;
+}
+
+#cart-container {
+  height: 30vh;
+  padding:1rem;
+  overflow: auto;
+}
+
+#cart-controles {
+  padding:1rem;
+}
 
 body {
   min-height: 100vh;
@@ -550,6 +570,7 @@ body {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  color: #ffffff;
 }
 .ft-legal-list li {
   margin: 0.125rem 0.625rem;
@@ -604,6 +625,8 @@ input.input-search:focus {
 
 .card-link {
   text-decoration: none;
+  font-size:1.5rem;
+  margin-left:2rem;
 }
 
 .card-data {
@@ -634,11 +657,12 @@ input.input-search:focus {
 }
 
 .card-oferta {
-  border-radius: 0 0 20px 20px;
-  background: var(--accent-color);
+  border-radius: 0 0 16px 16px;
+  background: var(--callacction-color);
   color: #ffffff;
   width: 33%;
   margin-left: 60%;
+  margin-top: -0.2rem;
   text-align: center;
   font-size: 18px;
   padding: 1em;
@@ -668,6 +692,27 @@ input.input-search:focus {
 
 
 
+
+.stable-cart {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.table-cart thead tr {
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
+}
+
+
+.table-cart th,
+.table-cart td {
+    padding: 12px 15px;
+}
 
 
 .w100 { width: 100%;}
@@ -788,6 +833,166 @@ input.input-search:focus {
   text-decoration: none;
   cursor: pointer;
 }
+
+
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+.pagination a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+
+.center {
+  text-align: center;
+}
+
+
+
+.toast-container {
+  position: fixed;
+  z-index: 9999;
+  top: 120px;
+  right: 20px;
+}
+.toast-container .toast {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  min-width: 280px;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, .15), 0 10px 10px -5px rgba(0, 0, 0, .1);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out;
+}
+.toast-container .toast:hover {
+  box-shadow: 0 15px 20px -5px rgba(0, 0, 0, .15), 0 15px 15px -5px rgba(0, 0, 0, .1);
+}
+.toast-container .toast .t-title {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  color: #262626;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+.toast-container .toast .t-title span {
+  font-size: 1.2rem;
+  padding: 0 10px 0 0;
+}
+.toast-container .toast .t-text {
+  color: #262626;
+  margin: 5px 0 0 0;
+}
+.toast-container .toast .t-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  right: -10px;
+  top: -10px;
+  padding: 0;
+  margin: 0;
+  background-color: #464646;
+  border-radius: 50%;
+  transform: rotate(45deg);
+  cursor: pointer;
+  box-shadow: 0 5px 10px -5px rgba(0, 0, 0, .15), 0 10px 10px -5px rgba(0, 0, 0, .1);
+}
+.toast-container .toast .t-close:after, .toast-container .toast .t-close:before {
+  content: '';
+  display: block;
+  position: absolute;
+  background-color: #eee;
+  border-radius: 3px;
+}
+.toast-container .toast .t-close:after {
+  width: 2px;
+  height: 16px;
+}
+.toast-container .toast .t-close:before {
+  width: 16px;
+  height: 2px;
+}
+.toast-container .toast.active {
+  opacity: 1;
+  visibility: visible;
+}
+.toast-container .toast.system {
+  background-color: #77a1fc;
+}
+.toast-container .toast.system .t-text {
+  color: #eee;
+}
+.toast-container .toast.system .t-title {
+  color: #eee;
+}
+.toast-container .toast.success {
+  background-color: #4ef7c4;
+}
+.toast-container .toast.warning {
+  background-color: #fcbc69;
+}
+.toast-container .toast.warning .t-text {
+  color: #eee;
+}
+.toast-container .toast.warning .t-title {
+  color: #eee;
+}
+.toast-container .toast.bug {
+  background-color: #fc6969;
+}
+.toast-container .toast.bug .t-text {
+  color: #eee;
+}
+.toast-container .toast.bug .t-title {
+  color: #eee;
+}
+
+
+
+.notification {
+  background-color: #555;
+  color: white;
+  text-decoration: none;
+  padding: 15px 26px;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.notification:hover {
+  background: red;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+}
+
+
+
 
 
 

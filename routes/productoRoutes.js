@@ -30,4 +30,10 @@ router.route('/category/:category/filter/:filter')
 router.route('/limit/:limit/offset/:offset/filter/:filter')
 .get(productoController.getFilteredProductsPaginated);
 
+
+
+
+router.route('/category/:category/filter/:filter/limit/:limit/offset/:offset')
+.get(productoController.getCategorizedFilteredPaginatedProducts);
+
 module.exports = router;

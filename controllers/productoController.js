@@ -119,6 +119,7 @@ exports.getFilteredProductsPaginated = async (req, res) => {
   const filter = req.params.filter.toLowerCase();
   const { limit, offset } = getLimitOffset(req);
 
+
   producto.getFilteredPaginated(conn, filter, limit, offset)
   .then((productos) => {
         
@@ -128,7 +129,7 @@ exports.getFilteredProductsPaginated = async (req, res) => {
         productos: productos,
         filter: filter,
         limit: limit,
-        offset: offset
+        offset: offset,
       }
     });
   }).catch((err) => {
@@ -148,6 +149,7 @@ exports.getCategorizedProducts = async (req, res) => {
   checkCategory(category, req, res);
 
   const conn = await getConnection(config);
+  const queryCount = await producto.countCategoryFiltered(conn, category);
 
   producto.getByCategory(conn, category)
   .then((productos) => {
@@ -158,7 +160,8 @@ exports.getCategorizedProducts = async (req, res) => {
         code: 404,
         data: {
           productos: [],
-          category: req.params.category
+          category: req.params.category,
+          count: 0,
         }
       });
     }
@@ -168,7 +171,8 @@ exports.getCategorizedProducts = async (req, res) => {
       status: 'success',
       data: {
         productos: productos,
-        category: req.params.category
+        category: req.params.category,
+        count: queryCount[0].count
       }
     });
   }).catch((err) => {
@@ -177,7 +181,8 @@ exports.getCategorizedProducts = async (req, res) => {
       status: 'failed',
       message: err,
       data: {
-        productos: []
+        productos: [],
+        count: 0,
       }
     });
   });
@@ -193,7 +198,7 @@ exports.getCategorizedFilteredProducts = async (req, res) => {
   checkCategory(category, req, res);
 
   const conn = await getConnection(config);
-  
+  const queryCount = await producto.countCategoryFiltered(conn, category, filterBy);
   producto.getByCategoryFiltered(conn, category, filterBy)
   .then((productos) => {
     
@@ -203,7 +208,8 @@ exports.getCategorizedFilteredProducts = async (req, res) => {
         code: 404,
         data: {
           productos: [],
-          category: req.params.category
+          category: req.params.category,
+          count: queryCount[0].count
         }
       });
     }
@@ -229,3 +235,62 @@ exports.getCategorizedFilteredProducts = async (req, res) => {
   });
 
 };
+
+
+
+exports.getCategorizedFilteredPaginatedProducts = async (req, res) => {
+  const category = parseInt(req.params.category);
+  const filterBy = req.params.filter;
+  const { limit, offset } = getLimitOffset(req);
+
+  checkCategory(category, req, res);
+
+  const conn = await getConnection(config);
+  const queryCount = await producto.countCategoryFiltered(conn, category, filterBy);
+  
+  producto.getByCategoryFilteredPaginated(conn, category, filterBy, limit, offset)
+  .then((productos) => {
+    
+    if (productos.length === 0) {
+      return res.status(404).json({
+        status: 'failed',
+        code: 404,
+        data: {
+          productos: [],
+          category: req.params.category,
+          filter: filterBy,
+          limit: limit,
+          offset: offset,
+          count: 0
+        }
+      });
+    }
+
+    return res.status(200).json({
+      status: 'success',
+      data: {
+        productos: productos,
+        category: req.params.category,
+        filter: filterBy,
+        limit: limit,
+        offset: offset,
+        count: queryCount[0].count
+      }
+    });
+  }).catch((err) => {
+    
+    return res.status(500).json({
+      status: 'failed',
+      message: err,
+      data: {
+        productos: [],
+        filter: filterBy,
+        limit: limit,
+        offset: offset,
+        count: 0
+      }
+    });
+  });
+
+};
+

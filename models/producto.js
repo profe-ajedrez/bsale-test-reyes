@@ -7,9 +7,10 @@ const config = require('../config/config');
 const {query, autoclosedQuery} = require('./db');
 
 const baseQuery = 'SELECT p.id,p.`name`,p.url_image,p.price,p.discount,p.category as category_id, c.name AS category FROM product p';
+const countQuery = 'SELECT COUNT(p.id) as `count` FROM product p';
 const baseJoin = 'LEFT JOIN category c ON p.category=c.id'
 const defaultSort = 'category';
-const defaultOrder = 'ORDER BY %DEFAULT_SORT%, id ASC';
+const defaultOrder = 'ORDER BY %DEFAULT_SORT%, p.id ASC';
 
 const getPaginationQuery = (limit, offset) => {
   let sql = '';
@@ -61,7 +62,6 @@ module.exports.getFiltered = (conn, filter, sorteredColumn) => {
 };
 
 module.exports.getByCategory = (conn, category, sorteredColumn) => {
-
   const sql = `${baseQuery} ${baseJoin} ${categorizedBy(category)} ${sortBy(sorteredColumn)}`;
   return autoclosedQuery(conn, sql, [category]);
 };
@@ -77,5 +77,24 @@ module.exports.getFilteredPaginated = (conn, filter, limit, offset, sorteredColu
 
 module.exports.getByCategoryFiltered = (conn, category, filter, sorteredColumn) => {
   const sql = `${baseQuery} ${baseJoin}  ${categorizedBy(category, filterBy(filter))} ${sortBy(sorteredColumn)}`;
+  return autoclosedQuery(conn, sql, [`%${filter}%`, `%${filter}%`, category]);
+};
+
+module.exports.countCategoryFiltered = (conn, category, filter, sorteredColumn) => {
+  let params = [];
+  const sql = `${countQuery} ${baseJoin} ${categorizedBy(category, filterBy(filter))} ${sortBy(sorteredColumn)}`;
+  if (!!filter) {
+    params.push(`%${filter}%`);
+    params.push(`%${filter}%`);
+  }
+  if (!!category) {
+    params.push(category);
+  }
+  return query(conn, sql, params);
+};
+
+module.exports.getByCategoryFilteredPaginated = (conn, category, filter, limit, offset, sorteredColumn) => {
+  const paginationQuery = getPaginationQuery(limit, offset);
+  const sql = `${baseQuery} ${baseJoin}  ${categorizedBy(category, filterBy(filter))} ${sortBy(sorteredColumn)} ${paginationQuery}`;
   return autoclosedQuery(conn, sql, [`%${filter}%`, `%${filter}%`, category]);
 };
