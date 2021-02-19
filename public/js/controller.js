@@ -51,6 +51,19 @@ const __app = (function(w, d) {
   }
 
 
+  function registerUpdatesUi(ui) {
+    if (__app.cart.size > 0) {
+      ui.vaciarCarro.classList.remove('hidden');
+    } else {
+      if (!ui.vaciarCarro.classList.contains('hidden')) {
+        ui.vaciarCarro.classList.add('hidden');
+      }
+    }
+    window.requestAnimationFrame(function(tick) {
+      registerUpdatesUi(ui)
+    });
+  }
+
   
   /**
    * init
@@ -63,12 +76,11 @@ const __app = (function(w, d) {
     loadCategories(ui);
     loadProducts(ui);
     __helpers.prepareToast(ui);
+    registerUpdatesUi(ui);
   }
 
 
-  function registerUpdatesUi() {
-    
-  }
+  
 
 
   d.addEventListener("DOMContentLoaded", function() {
@@ -89,6 +101,7 @@ const __app = (function(w, d) {
       verCarro: d.getElementById('verCarro'),
       resumen: d.getElementById('resumen'),
       cartConta: d.getElementById('cart-container'),
+      vaciarCarro: d.getElementById('vaciarCarro'),
     };
 
 

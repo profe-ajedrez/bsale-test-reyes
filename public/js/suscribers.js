@@ -244,6 +244,16 @@ const clientSuscribers = (function (w, d) {
     });
   }
 
+
+  function registerVaciarCarroListener(_app, ui) {
+    ui.vaciarCarro.addEventListener('click', function(e) {
+      e.preventDefault();
+      ui.cartConta.innerHTML = '';
+      ui.contadorProd.textContent = 0;
+      _app.cart.clear();
+    });
+  }
+
   
 
   /**
@@ -324,6 +334,7 @@ const clientSuscribers = (function (w, d) {
     changeCategorylistener(_app, ui);
     filterListener(_app, ui);
     showResumenListener(_app, ui);
+    registerVaciarCarroListener(_app, ui);
     eventDelegationPattern(_app, ui);
   }
 
