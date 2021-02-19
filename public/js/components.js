@@ -95,7 +95,7 @@ const __components = (function(w, d) {
                 <a class='card-link' title="Ver producto" href='#' data-src='${imgUrl}'><i data-src='${imgUrl}' class="fas fa-eye card-link"></i></a>           
               </div>
               <div class='card-controls'>
-                <button data-productid='${current.id}' data-product='${JSON.stringify(current)}' class='add w100 btn btn-round btn-lg btn-filled-orange' title="Agregar al carro"><i data-product='${JSON.stringify(current)}' class="add fas fa-shopping-cart"></i></button>
+                <button data-productid='${current.id}' data-product='${JSON.stringify(current)}' class='add-cart w100 btn btn-round btn-lg btn-filled-orange' title="Agregar al carro"><i data-product='${JSON.stringify(current)}' class="add-cart fas fa-shopping-cart"></i></button>
               </div>
             </div>
           </div>

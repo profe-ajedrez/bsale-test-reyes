@@ -8,6 +8,9 @@ Esta aplicación se encuentra montada en Heroku en https://bsale-test-andres-rey
 
 ## Obs.
 
+En config/config.env se usan placeholders en lugar de las credenciales para proteger
+los accesos a DB, por eso se indica el reemplazar con las credenciales antes de ejecutar en local o deployar
+
 Como se usan promesas y otras capacidades ES6 esta aplicación no correra en Internet Explorer.
 Para probar prefiera chrome o firefox
 

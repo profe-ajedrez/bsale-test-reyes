@@ -273,7 +273,7 @@ const clientSuscribers = (function (w, d) {
       }
 
       /* evento click en algún boton agregar al carro */
-      if (e.target.className.indexOf("add ") > -1) {
+      if (e.target.className.indexOf("add-cart") > -1) {
         addProductToCart(e, ui, _app);
         return;
       }
