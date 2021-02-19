@@ -66,7 +66,7 @@ $ heroku create
 4 Deploye a Heroku
 
 ```bash
-$ git push heroku main
+$ git push heroku master
 ```
 
 5 Asegurece de que la app esta corriendo
