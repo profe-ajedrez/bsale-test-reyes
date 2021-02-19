@@ -88,14 +88,35 @@ $ heroku open
 Solo reemplace :parametro por algún valor válido.
 
 ```
-GET 
-
-/limit/:limit/offset/:offset
-/category/:category
-/filter/:filter
-/category/:category/filter/:filter
-/category/:category/filter/:filter/limit/:limit/offset/:offset
+GET /api/v1/productos/limit/:limit/offset/:offset     
 ```
+Obtiene los productos con un limite de cantidad, empezando desde el offset indicado
+
+
+```
+GET /api/v1/productos/category/:category
+```
+Obtiene los productos de la categoría especificada
+
+
+```
+GET /api/v1/productos/filter/:filter
+```
+Obtiene los productos cuyo nombre o categoría coincidan con el filtro indicado
+
+
+```
+GET /api/v1/productos/category/:category/filter/:filter
+```
+Obtiene los productos de la categoría indicada y cuyo nombre o categoría coincidan con el filtro indicado
+
+
+```
+GET /api/v1/productos/category/:category/filter/:filter/limit/:limit/offset/:offset
+```
+Obtiene los productos de la categoría indicada con limite desde el offset indicado
+
+
 
 Archivo con definición de request para ser importado por Postman y probar API:
 
