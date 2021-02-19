@@ -1,6 +1,17 @@
+/** 
+ * @const {function} clientSuscribers  Encapsula los oyentes de eventos de la aplicación cliente 
+ **/
 const clientSuscribers = (function (w, d) {
 
-
+  /**
+   * updateCart
+   *
+   * Genera la tabla que muestra info del carro de compras
+   * 
+   * @param {Object} _app
+   * @param {Object} ui
+   * @return {String} 
+   */
   function updateCart(_app, ui) {
     const template = Array.from(_app.cart.values());
     let total = 0;
@@ -43,6 +54,14 @@ const clientSuscribers = (function (w, d) {
   }
 
 
+  /**
+   * showImageDetail
+   * 
+   * Muestra un lightbox con la imagen del producto
+   *
+   * @param {HTMLEvent} e
+   * @param {Object} ui
+   */
   function showImageDetail(e, ui) {
     e.preventDefault();
     e.stopImmediatePropagation();
@@ -55,6 +74,15 @@ const clientSuscribers = (function (w, d) {
   }
 
 
+  /**
+   * addProductToCart
+   * 
+   * Agrega el producto seleccionado al carro de compras
+   *
+   * @param {HTMLEvent} e
+   * @param {Object} ui
+   * @param {Object} _app
+   */
   function addProductToCart(e, ui, _app) {
     e.preventDefault();
     e.stopImmediatePropagation();
@@ -71,6 +99,14 @@ const clientSuscribers = (function (w, d) {
     ui.cartConta.innerHTML = updateCart(_app, ui);
   }
 
+
+  /**
+   * showMenuMobile
+   * 
+   * Despliega la barra de navegación del menu movil en dispositivos moviles
+   * 
+   * @params {HTMLEvent} e
+   */
   function showMenuMobile(e) {
     e.preventDefault();
     const items = d.querySelectorAll("ul.menu li.item");
@@ -79,12 +115,30 @@ const clientSuscribers = (function (w, d) {
     });
   }
 
+
+  /**
+   * changeCategorylistener
+   * 
+   * REgistra el listener al evento change del elemento select de categorias
+   *
+   * @param {Object} __app
+   * @param {Object} ui
+   */
   function changeCategorylistener(__app, ui) {
     ui.selectCategories.addEventListener("change", function (e) {
       __app.loadProducts(ui);
     });
   }
 
+
+  /**
+   * filterListener
+   *
+   * Registra el listener para el evento submitir del formulario de filtro
+   * 
+   * @param {Object} _app
+   * @param {Object} ui
+   */
   function filterListener(_app, ui) {
     ui.querier.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -109,6 +163,14 @@ const clientSuscribers = (function (w, d) {
 
   
 
+  /**
+   * eventDelegationPattern
+   *
+   * Registra diversos listeners al evento click usando patron delegación de eventos.
+   * 
+   * @param {Object} _app
+   * @param {Object} ui
+   */
   function eventDelegationPattern(_app, ui) {
     d.addEventListener("click", function (e) {
       if (e.target.className.indexOf("card-link") > -1) {
@@ -127,6 +189,15 @@ const clientSuscribers = (function (w, d) {
     });
   }
 
+
+  /**
+   * showResumenListener
+   * 
+   * Registra el evento que muestra el resumen del carro de compra
+   *
+   * @param {Object} _app
+   * @param {Object} ui
+   */
   function showResumenListener(_app, ui) {
     ui.verCarro.addEventListener("click", function (e) {
       e.preventDefault();
@@ -134,6 +205,15 @@ const clientSuscribers = (function (w, d) {
     });
   }
 
+
+  /**
+   * register
+   * 
+   * Expone un punto para registrar listener para que sea llamado por la aplicación cliente
+   *
+   * @param {Object} _app
+   * @param {Object} ui
+   */
   function register(_app, ui) {
     changeCategorylistener(_app, ui);
     filterListener(_app, ui);

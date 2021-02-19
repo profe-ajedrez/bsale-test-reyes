@@ -1,6 +1,16 @@
-
+/** 
+ * @const {function} __components  Encapsula los componnetes html
+ **/
 const __components = (function(w, d) {
 
+  /**
+   * getCategoriesComponent
+   *
+   * Retorna como string los elementos options para el select de categorías
+   * 
+   * @param {Array} categories
+   * @return {String} 
+   */
   function getCategoriesComponent(categories) {
     const template = '<option value="%value%">%label%</option>';
 
@@ -12,6 +22,16 @@ const __components = (function(w, d) {
   }
 
 
+  /**
+   * getPaginator
+   *
+   * Retorna un string con el elemento  paginador
+   * 
+   * @param {int} count
+   * @param {int} limit
+   * @param {int} offset
+   * @return {String} 
+   */
   function getPaginator(count, limit, offset) {
     const pages = Math.round(count / limit);    
     let offsetCount = 0;
@@ -30,9 +50,23 @@ const __components = (function(w, d) {
   }
 
 
+  /**
+   * getGridProducts
+   * 
+   * Devuelve la grilla de productos para ser injectada en el DOM
+   *
+   * @param {Object} dataProducts
+   * @param {String} defaultImgUrl
+   * @return {string} 
+   */
   function getGridProducts(dataProducts, defaultImgUrl) {
-    if (dataProducts.length === 0) {
-      return '<div class="alert">No se encontraron productos</div>';
+    if (dataProducts.data.productos.length === 0) {
+      return `
+      <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        No se encontraron productos
+      </div>
+      `;
     }    
 
     const grid = '<div class="row">' +

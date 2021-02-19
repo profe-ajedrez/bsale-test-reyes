@@ -1,13 +1,25 @@
 /**
- * @constant {function} __components
- * @constant {function} __fetchers
- * 
+ * @constant {function} __helpers         Desde helpers.js
+ * @constant {function} __components      Desde components.js
+ * @constant {function} __fetchers        Desde fetchers.js
+ * @constant {function} _clientSuscribers Desde suscribers.js
  */
 
+/** 
+ * @const {function} __app  representa la aplicación cliente
+ * 
+ **/
 const __app = (function(w, d) {
   
   const cart = new Map();
 
+  /**
+   * loadCategories
+   * 
+   * carga las categorias desde api en select
+   *
+   * @param {Object} ui
+   */
   async function loadCategories(ui) {
     ui.gridContainer.style.display = 'none';
     ui.loader.style.display = 'block';
@@ -17,6 +29,13 @@ const __app = (function(w, d) {
   }
 
 
+  /**
+   * loadProductos
+   *
+   * construye grilla de prosuctos
+   * 
+   * @param {Object} ui
+   */
   async function loadProducts(ui) {
     ui.loader.style.display = 'block';
     ui.gridContainer.style.display = 'none';
@@ -31,22 +50,25 @@ const __app = (function(w, d) {
   }
 
 
-  function prepareToast(ui) {
-    if(ui.toastContainer.length == 0){        
-        const toastContainerContent = '<div class="toast-container"></div>';         
-        document.querySelector("body").insertAdjacentHTML('beforeend', toastContainerContent);
-    }
-  }
-
-
+  
+  /**
+   * init
+   * 
+   * Inicializa la aplicación cliente
+   *
+   * @param {*} ui
+   */
   function init(ui) {
     loadCategories(ui);
     loadProducts(ui);
-    prepareToast(ui);
+    __helpers.prepareToast(ui);
   }
 
-  d.addEventListener("DOMContentLoaded", function() {
 
+
+
+  d.addEventListener("DOMContentLoaded", function() {
+    /** @constant {Object} ui  encapsula elementos de interfaz de usuario de uso comun o cuya interacción gatilla eventos */
     const ui = {
       selectCategories : d.getElementById('categories_sel'),
       gridContainer : d.getElementById('grid-container'),

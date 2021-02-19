@@ -1,9 +1,30 @@
+/** 
+ * @const {function} __helpers  Encapsula funciones utiles
+ **/
 const __helpers = (function (w, d) {
+
+  /**
+   * checkResource
+   * 
+   * Usa peticion ajax para comprobar si existe un recurso del servidor (como una imagen)
+   * 
+   * @param {String} resource
+   * @return {boolean} 
+   */
   async function checkResource(resource) {
     const response = await fetch(resource);
     return response.ok;
   }
 
+
+  /**
+   * getImgUrl
+   * 
+   *
+   * @param {String} urlImg
+   * @param {String} defaultUrl
+   * @return {*} 
+   */
   async function getImgUrl(urlImg, defaultUrl) {
     if (await checkResource(urlImg)) {
       return urlImg;
@@ -11,6 +32,30 @@ const __helpers = (function (w, d) {
     return defaultUrl;
   }
 
+  /**
+   * prepareToast
+   * 
+   * injerta el contenedor de toast en el DOM
+   *
+   * @param {Object} ui
+   */
+  function prepareToast(ui) {
+    if(ui.toastContainer.length == 0){        
+        const toastContainerContent = '<div class="toast-container"></div>';         
+        d.querySelector("body").insertAdjacentHTML('beforeend', toastContainerContent);
+    }
+  }
+
+  /**
+   * createToast
+   * 
+   * Despliega un toast 
+   *
+   * @param {string} type
+   * @param {string} title
+   * @param {string} text
+   * @param {int} duration
+   */
   function createToast(type, title, text, duration) {
     const toastElem = document.createElement("div");
     toastElem.classList.add("toast");
@@ -73,5 +118,6 @@ const __helpers = (function (w, d) {
     checkResource: checkResource,
     getImgUrl: getImgUrl,
     createToast: createToast,
+    prepareToast: prepareToast,
   };
 })(window, document);

@@ -1,6 +1,6 @@
-
-
-
+/** 
+ * @const {function} __fetchers  Encapsula funciones que realizan llamadas a api
+ **/
 const __fetchers = (function(w, d) {
 
   const api = '/api/v1';
@@ -12,7 +12,13 @@ const __fetchers = (function(w, d) {
   };
 
 
-  
+  /**
+   * fetchCategories
+   * 
+   * Realiza una petición contra la api para traer las categorías de producto
+   *
+   * @return {Array} 
+   */
   async function fetchCategories() {
     try {
       const response = await fetch(`${api}/categories`);
@@ -29,6 +35,17 @@ const __fetchers = (function(w, d) {
   }
 
 
+  /**
+   * fetchProductos
+   * 
+   * Realiza petición ajax contra api para obtener los productos a mostrar
+   *
+   * @param {int} categoryId
+   * @param {String} filterBy
+   * @param {int} limit
+   * @param {int} offset
+   * @return {Object} 
+   */
   async function fetchProductos(categoryId, filterBy, limit, offset) {
     let entryPoint = `${api}/productos`;
 

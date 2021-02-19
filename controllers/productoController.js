@@ -28,6 +28,16 @@ const getLimitOffset = (req) => {
 
 
 
+/**
+ * checkCategory
+ *
+ * Si category no es numerico, envia respuesta con status 400
+ * 
+ * @param {*} category
+ * @param {*} req
+ * @param {*} res
+ * @return {*} 
+ */
 const checkCategory = (category, req, res) => {
   /* Solo aceptamos categorías numericas, en caso contrario respondemos con 
      status código 400, mal request, porque preferimos asumir una intervención del request, por seguridad
@@ -46,7 +56,14 @@ const checkCategory = (category, req, res) => {
 };
 
 
-
+/**
+ * getAllProducts
+ * 
+ * Maneja la petición de todos los productos
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 exports.getAllProducts = async (req, res) => {
   const conn = await getConnection(config);
     
@@ -67,6 +84,15 @@ exports.getAllProducts = async (req, res) => {
 };
 
 
+
+/**
+ * getPaginatedProducts
+ * 
+ * Maneja la petición paginada de los productos
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 exports.getPaginatedProducts = async (req, res) => {
   const conn = await getConnection(config);
   const { limit, offset } = getLimitOffset(req);  
@@ -91,6 +117,15 @@ exports.getPaginatedProducts = async (req, res) => {
 };
 
 
+
+/**
+ * getFilteredProducts
+ * 
+ * Maneja la petición filtrada de los productos
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 exports.getFilteredProducts = async (req, res) => {
   const conn = await getConnection(config);
   const filter = req.params.filter.toLowerCase();
@@ -114,6 +149,15 @@ exports.getFilteredProducts = async (req, res) => {
 };
 
 
+
+/**
+ * getFilteredProductsPaginated
+ * 
+ * Maneja la petición filtrada y paginada de los productos
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 exports.getFilteredProductsPaginated = async (req, res) => {
   const conn = await getConnection(config);
   const filter = req.params.filter.toLowerCase();
@@ -143,6 +187,15 @@ exports.getFilteredProductsPaginated = async (req, res) => {
 };
 
 
+
+/**
+ * getCategorizedProducts
+ * 
+ * Maneja la petición filtrada por categoría de los productos
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 exports.getCategorizedProducts = async (req, res) => {
   const category = parseInt(req.params.category);
 
@@ -191,6 +244,14 @@ exports.getCategorizedProducts = async (req, res) => {
 
 
 
+/**
+ * getCategorizedFilteredProducts
+ * 
+ * Maneja la petición filtrada por categoría y por filtro personalizado de los productos
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 exports.getCategorizedFilteredProducts = async (req, res) => {
   const category = parseInt(req.params.category);
   const filterBy = req.params.filter;
@@ -237,7 +298,14 @@ exports.getCategorizedFilteredProducts = async (req, res) => {
 };
 
 
-
+/**
+ * getCategorizedFilteredPaginatedProducts
+ * 
+ * Maneja la petición paginada y filtrada por categoría y por filtro personalizado de los productos
+ * 
+ * @param {Request} req 
+ * @param {Response} res 
+ */
 exports.getCategorizedFilteredPaginatedProducts = async (req, res) => {
   const category = parseInt(req.params.category);
   const filterBy = req.params.filter;

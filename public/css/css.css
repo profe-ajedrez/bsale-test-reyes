@@ -1,8 +1,12 @@
+/**
+* css.css
+*
+*/
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 :root {
-  --accent-color: #2980b9;
-  --body-color: #3498db;
+  --accent-color: #16a085;
+  --body-color: #1abc9c;
   --loader-color: #ffffff;
   --callacction-color: #d35400;
 }
@@ -993,7 +997,31 @@ input.input-search:focus {
 
 
 
+.alert {
+  padding: 20px;
+  background-color: #f39c12;
+  color: white;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight:bold;
+}
 
+/* The close button */
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: black;
+}
 
 
 

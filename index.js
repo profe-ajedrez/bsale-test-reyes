@@ -1,7 +1,7 @@
 /**
  * index.js
  * 
- * Entry point
+ * Entry point de la aplicación
  */
 
 'use strict';
@@ -27,12 +27,10 @@ app.use( async (req, res, next) => {
 });
 
 
-
 /* HERE  import routes  */
 
 app.use('/api/v1/productos', productoRouter);
 app.use('/api/v1/categories', categoryRouter);
-
 
 app.listen(app.config.port, () => {
   app.emit('serverRunning');

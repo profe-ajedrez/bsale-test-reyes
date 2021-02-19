@@ -1,11 +1,21 @@
 /**
  * models/db.js
+ * 
+ * Helpers para la conección a mysql
  */
 "use strict";
 
 const mysql = require("mysql");
 
-const getConnection = (config) => {
+/**
+ * getPromisedConnection
+ * 
+ * Retorna una promesa de la connección a BD
+ *
+ * @param {Object} config
+ * @return Promise 
+ */
+const getPromisedConnection = (config) => {
   return new Promise((resolve, reject) => {
     const conn = mysql.createConnection({
       host: config.host,
@@ -31,7 +41,17 @@ const getConnection = (config) => {
 };
 
 
-
+/**
+ * Query
+ * 
+ * Retorna una promesa de la consulta definida en parametro sql
+ *
+ * @param {Mysql} conn
+ * @param {String} sql
+ * @param {Array} args
+ * 
+ * @return Promise 
+ */
 const query = (conn, sql, args) => {
   return new Promise((resolve, reject) => {
     conn.query(sql, args, (err, rows) => {
@@ -42,6 +62,18 @@ const query = (conn, sql, args) => {
   });
 };
 
+
+/**
+ * autoclosedQuery
+ *
+ * Espera por la respuesta de query(), y al recibirla cierra la conección a BD 
+ * 
+ * @param {Mysql} conn
+ * @param {String} sql
+ * @param {Array} args
+ * 
+ * @return Array 
+ */
 const autoclosedQuery = async (conn, sql, args) => {
   const result = await query(conn, sql, args);
   conn.end((err) => {
@@ -52,4 +84,4 @@ const autoclosedQuery = async (conn, sql, args) => {
 
 
 
-module.exports = { query, autoclosedQuery, getConnection };
+module.exports = { query, autoclosedQuery, getConnection: getPromisedConnection };
