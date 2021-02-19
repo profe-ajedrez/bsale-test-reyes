@@ -1,0 +1,211 @@
+{
+	"info": {
+		"_postman_id": "240298ca-8b31-44ec-956d-5789b8720c33",
+		"name": "bsale",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getProductos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bsale-test-andres-reyes.herokuapp.com/api/v1/productos",
+					"protocol": "https",
+					"host": [
+						"bsale-test-andres-reyes",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"productos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductos with offset and limit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bsale-test-andres-reyes.herokuapp.com/api/v1/productos/limit/20/offset/50",
+					"protocol": "https",
+					"host": [
+						"bsale-test-andres-reyes",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"productos",
+						"limit",
+						"20",
+						"offset",
+						"50"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getFiltered",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bsale-test-andres-reyes.herokuapp.com/api/v1/productos/filter/a",
+					"protocol": "https",
+					"host": [
+						"bsale-test-andres-reyes",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"productos",
+						"filter",
+						"a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getFilteredPaginated",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bsale-test-andres-reyes.herokuapp.com/api/v1/productos/limit/2/offset/0/filter/ron",
+					"protocol": "https",
+					"host": [
+						"bsale-test-andres-reyes",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"productos",
+						"limit",
+						"2",
+						"offset",
+						"0",
+						"filter",
+						"ron"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllCategories",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bsale-test-andres-reyes.herokuapp.com/api/v1/categories",
+					"protocol": "https",
+					"host": [
+						"bsale-test-andres-reyes",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getFilteredCategorized",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bsale-test-andres-reyes.herokuapp.com/api/v1/productos/category/3/filter/pampe",
+					"protocol": "https",
+					"host": [
+						"bsale-test-andres-reyes",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"productos",
+						"category",
+						"3",
+						"filter",
+						"pampe"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCategorizedFilteredPaginatedProducts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bsale-test-andres-reyes.herokuapp.com/api/v1/productos/category/4/filter/a/limit/10/offset/5",
+					"protocol": "https",
+					"host": [
+						"bsale-test-andres-reyes",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"productos",
+						"category",
+						"4",
+						"filter",
+						"a",
+						"limit",
+						"10",
+						"offset",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getByCategory",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://bsale-test-andres-reyes.herokuapp.com/api/v1/productos/category/5",
+					"protocol": "https",
+					"host": [
+						"bsale-test-andres-reyes",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"productos",
+						"category",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
