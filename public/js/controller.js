@@ -13,6 +13,7 @@ const __app = (function(w, d) {
   
   const cart = new Map();
 
+  
   /**
    * loadCategories
    * 
@@ -65,6 +66,9 @@ const __app = (function(w, d) {
   }
 
 
+  function registerUpdatesUi() {
+    
+  }
 
 
   d.addEventListener("DOMContentLoaded", function() {

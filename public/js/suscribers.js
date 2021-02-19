@@ -23,7 +23,8 @@ const clientSuscribers = (function (w, d) {
             <th>Producto</th>
             <th>Cantidad</th>
             <th>Valor</th>
-            <th>Total</th>            
+            <th>Total</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -32,11 +33,22 @@ const clientSuscribers = (function (w, d) {
         total += current.price * current.cantidad;
         return `
       ${prev}
-        <tr id="line-${current.id}">
+        <tr id="line-${current.id}" >
           <td>${current.name}</td>
-          <td>${current.cantidad}</td>
+          <td id="cantidad-${current.id}" >${current.cantidad}</td>
           <td>${current.price}</td>
-          <td>${current.price * current.cantidad}</td>          
+          <td id="subtotal-${current.id}">${current.price * current.cantidad}</td>
+          <td>
+            <a href="#" class="remove-onsite" data-id="${current.id}">
+              <i class="remove-onsite fas fa-minus" data-id="${current.id}" ></i> 
+            </a>
+            <a href="#" class="add-onsite" data-id="${current.id}">
+              <i class="add-onsite fas fa-plus" data-id="${current.id}"></i>
+            </a>  
+            <a href="#" class="del-onsite" data-id="${current.id}">
+              <i class="del-onsite far fa-trash-alt" data-id="${current.id}"></i>
+            </a>
+          </td>
         </tr>      
       `;
       }, "") +
@@ -47,10 +59,81 @@ const clientSuscribers = (function (w, d) {
 
     return ` 
     <div>
-      Total: ${total}
+      Total: <span id="resumenTotal">${total}</a>
     </div>
     ${resume}
     `;
+  }
+
+
+  function removeProductFromResume(e, ui, _app) {
+    const id = parseInt(e.target.dataset.id);
+
+    if (isNaN(id) || !_app.cart.has(id)) {
+      return;
+    }
+
+    const resumenTotalElem = d.getElementById('resumenTotal');
+    const product = _app.cart.get(id);    
+    const tableTr = d.getElementById(`line-${id}`);
+    ui.contadorProd.textContent = parseInt(ui.contadorProd.textContent) - product.cantidad;
+    resumenTotalElem.textContent = parseInt(resumenTotalElem.textContent) - product.cantidad * product.price;
+    tableTr.remove();
+    _app.cart.delete(id);
+  }
+
+
+  function updateCantidadResumen(e, ui, _app, changeCantidad) {
+    const id = parseInt(e.target.dataset.id);
+
+    if (isNaN(id) || !_app.cart.has(id)) {
+      return;
+    }
+    /* obtenemos el signo de changeCantidad para saber si hay que restar o sumar al total el precio del producto */
+    const relativeSign = changeCantidad / Math.abs(changeCantidad);
+    const product = _app.cart.get(id);
+
+    /* Si estamos restando cantidad, y la cantida llego al mínimo (1) volver. */
+    if (product.cantidad === 1 && relativeSign === -1) {
+      __helpers.createToast(null, "", "Use el botón eliminar <i class='far fa-trash-alt' ></i> para remover el producto", 2500);
+      return;
+    }
+
+    const cantidadElem = d.getElementById(`cantidad-${id}`);
+    const subTotalElem = d.getElementById(`subtotal-${id}`);
+    const resumenTotalElem = d.getElementById('resumenTotal');
+
+    _app.cart.get(id).cantidad = Math.max(1, _app.cart.get(id).cantidad + changeCantidad);
+    cantidadElem.textContent = product.cantidad;
+    subTotalElem.textContent = product.cantidad * product.price;
+
+    resumenTotalElem.textContent = parseInt(resumenTotalElem.textContent) + (product.price * relativeSign);
+    ui.contadorProd.textContent = parseInt(ui.contadorProd.textContent) + relativeSign;
+  }
+
+
+  /**
+   * addProductoOnResume
+   *
+   * @param {HTMLEvent} e
+   * @param {Object} ui
+   * @param {Object} _app
+   * @param {int} idProduct
+   */
+  function addProductoOnResume(e, ui, _app) {
+    updateCantidadResumen(e, ui, _app, 1);
+  }
+
+  /**
+   * removeProductoOnResume
+   *
+   * @param {HTMLEvent} e
+   * @param {Object} ui
+   * @param {Object} _app
+   * @param {int} idProduct
+   */
+  function removeProductoOnResume(e, ui, _app) {
+    updateCantidadResumen(e, ui, _app, -1);
   }
 
 
@@ -119,7 +202,7 @@ const clientSuscribers = (function (w, d) {
   /**
    * changeCategorylistener
    * 
-   * REgistra el listener al evento change del elemento select de categorias
+   * Registra el listener al evento change del elemento select de categorias
    *
    * @param {Object} __app
    * @param {Object} ui
@@ -173,19 +256,42 @@ const clientSuscribers = (function (w, d) {
    */
   function eventDelegationPattern(_app, ui) {
     d.addEventListener("click", function (e) {
+      /* Evento click en algun ojito de las tarjetas de producto para ver imagen en detalle  */
       if (e.target.className.indexOf("card-link") > -1) {
         showImageDetail(e, ui);
         return;
       }
 
-      if (e.target.className.indexOf("add") > -1) {
+      /* evento click en algún boton agregar al carro */
+      if (e.target.className.indexOf("add ") > -1) {
         addProductToCart(e, ui, _app);
         return;
       }
 
+      /* evento click en mostrar menu en dipositivos moviles */
       if (e.target.className.indexOf("toggle") > -1) {
         showMenuMobile(e);
+        return;
       }
+
+      /*  evento click en botón restar un producto en resumen de carro */
+      if (e.target.classList.contains('remove-onsite')) {
+        removeProductoOnResume(e, ui, _app);
+        return;
+      }
+
+      /* evento click en botón agregar un producto en resumen de carro */
+      if (e.target.classList.contains('add-onsite')) {
+        addProductoOnResume(e, ui, _app);
+        return;
+      }
+
+      /* evento click en botón remover un producto en resumen de carro */
+      if (e.target.classList.contains('del-onsite')) {
+        removeProductFromResume(e, ui, _app);
+        return;
+      }
+      
     });
   }
 
