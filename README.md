@@ -81,7 +81,23 @@ $ heroku open
 7 Enjoy!
 
 
+## API
 
+### Puntos de entrada
 
+Solo reemplace :parametro por algún valor válido.
 
+```
+GET 
+
+/limit/:limit/offset/:offset
+/category/:category
+/filter/:filter
+/category/:category/filter/:filter
+/category/:category/filter/:filter/limit/:limit/offset/:offset
+```
+
+Archivo con definición de request para ser importado por Postman y probar API:
+
+https://github.com/profe-ajedrez/bsale-test-reyes/blob/master/bsale.postman_collection.json
 
