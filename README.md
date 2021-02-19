@@ -6,6 +6,12 @@ Se trata de una app web de única pagina que consulta contra una api montada en 
 
 Esta aplicación se encuentra montada en Heroku en https://bsale-test-andres-reyes.herokuapp.com/
 
+## Obs.
+
+Como se usan promesas y otras capacidades ES6 esta aplicación no correra en Internet Explorer.
+Para probar prefiera chrome o firefox
+
+
 ## Como ejecutar en local
 
 
